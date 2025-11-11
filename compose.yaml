@@ -1,0 +1,22 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq3
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15674:15674"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      # CORS allowed origin
+      RABBITMQ_WEB_STOMP_ALLOWED_ORIGINS: "http://localhost:5173"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: unless-stopped
+    command: >
+      bash -c "rabbitmq-plugins enable --offline rabbitmq_stomp rabbitmq_web_stomp &&
+               rabbitmq-server"
+
+volumes:
+  rabbitmq_data:

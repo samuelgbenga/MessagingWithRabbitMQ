@@ -1,21 +1,40 @@
 package com.example.rabbitmqmessagingapp.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record MessageDTO (Long id, String sender, String receiver, String content, String messageId) {
+/**
+ * Data Transfer Object for chat messages.
+ * Validation ensures that both sender and content are provided.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MessageDTO {
 
-     // what is the possibility that two users with same name already exist
-    // user name must not be thesame. no two same user must exist in the db. (solution)
-    // how do you differentiate
+    private Long id;
 
-    MessageDTO (String sender, String receiver, String content, String messageId) {
+    @NotBlank(message = "Sender cannot be null or empty")
+    @Size(max = 50, message = "Sender name must not exceed 50 characters")
+    private String sender;
+
+    private String receiver = "public";
+
+    @NotBlank(message = "Content cannot be null or empty")
+    @Size(max = 500, message = "Message content must not exceed 500 characters")
+    private String content;
+
+    private String messageId;
+
+    // Convenience constructors (overloads)
+    public MessageDTO(String sender, String receiver, String content, String messageId) {
         this(null, sender, receiver, content, messageId);
     }
 
-    // to ignore id upon request
-    MessageDTO (String sender, String receiver, String content){
+    public MessageDTO(String sender, String receiver, String content) {
         this(null, sender, receiver, content, null);
     }
-
-
 }
-

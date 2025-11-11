@@ -11,7 +11,7 @@ public class RabbitMQConsumer {
     // Example consumer for default queue
     @RabbitListener(queues = "chat.queue.default")
     public void receiveMessage(MessageDTO message) {
-        System.out.println(" [Consumer] Received message for " + message.receiver() + ": " + message.content());
+        System.out.println(" [Consumer] Received message for " + message.getReceiver() + ": " + message.getContent());
     }
 
     // You can dynamically create listeners for each user in a real app

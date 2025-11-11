@@ -23,6 +23,6 @@ public class RabbitMQProducer {
        // String routingKey = "chat.message." + message.receiver(); // e.g., chat.message.john
         //rabbitTemplate.convertAndSend("amq.topic", routingKey, message); // for stomp
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, routingKey, message); // to publish in the logs optional
-        System.out.println(" [Producer] Sent to " + message.receiver() + ": " + message.content());
+        System.out.println(" [Producer] Sent to " + message.getReceiver() + ": " + message.getContent());
     }
 }
